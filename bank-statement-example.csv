@@ -1,0 +1,3 @@
+id,date,description,amount
+BANK-001,2026-11-01,"Customer receipt, invoice S-001",1180.00
+BANK-002,2026-11-02,Supplier payment,-590.00
