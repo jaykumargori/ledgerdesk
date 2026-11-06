@@ -2,6 +2,23 @@
 
 Independent offline SwiftUI accounting software for Apple Silicon Macs running macOS 14 or later. This is an ongoing implementation, not a complete TallyPrime replacement or a product of Tally Solutions.
 
+## Screenshots
+
+### Gateway
+![LedgerDesk Gateway](docs/screenshots/gateway.png)
+
+### Master creation
+![Master creation menu](docs/screenshots/master-creation.png)
+
+### Banking activities
+![Banking activities](docs/screenshots/banking-activities.png)
+
+### Bank reconciliation
+![Bank reconciliation summary](docs/screenshots/bank-reconciliation.png)
+
+### Go To
+![Go To navigation](docs/screenshots/go-to.png)
+
 ## Run and data
 Unzip LedgerDesk-Mac.zip and open LedgerDesk.app. The package is locally signed; it is not notarized. Data is stored at ~/Library/Application Support/LedgerDesk/books.json. Company > Export Backup saves a portable JSON backup. Import preserves the previous file as before-import-<UUID>.json in that directory before replacing it. Existing 0.1/0.2 books are decoded with defaults for new fields.
 
