@@ -10,7 +10,8 @@ if [[ ! -d "$sparkle_dir/Sparkle.framework" ]]; then
 fi
 stage=$(mktemp -d "${TMPDIR:-/tmp}/ledgerdesk-build.XXXXXX")
 trap 'rm -rf "$stage"' EXIT
-mkdir -p "$stage/LedgerDesk.app/Contents/MacOS" "$stage/LedgerDesk.app/Contents/Frameworks"
+mkdir -p "$stage/LedgerDesk.app/Contents/MacOS" "$stage/LedgerDesk.app/Contents/Frameworks" "$stage/LedgerDesk.app/Contents/Resources"
+cp -X assets/LedgerDesk.icns "$stage/LedgerDesk.app/Contents/Resources/LedgerDesk.icns"
 ditto "$sparkle_dir/Sparkle.framework" "$stage/LedgerDesk.app/Contents/Frameworks/Sparkle.framework"
 xattr -cr "$stage/LedgerDesk.app/Contents/Frameworks/Sparkle.framework"
 swiftc -target arm64-apple-macos14.0 -module-cache-path "${TMPDIR:-/tmp}/ledgerdesk-build-cache" -F "$stage/LedgerDesk.app/Contents/Frameworks" -framework Sparkle -Xlinker -rpath -Xlinker '@executable_path/../Frameworks' -parse-as-library LedgerDesk.swift Invoices.swift InvoiceViews.swift Reports.swift Business.swift BusinessViews.swift PrimeUI.swift LatestUI.swift BankReports.swift BankingUI.swift PurchaseOrders.swift DocumentUI.swift -o "$stage/LedgerDesk.app/Contents/MacOS/LedgerDesk"
