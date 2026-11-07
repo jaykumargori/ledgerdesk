@@ -1,6 +1,12 @@
-# LedgerDesk for Mac — development build 0.6
+# LedgerDesk for Mac — development build 0.7
 
 Independent offline SwiftUI accounting software for Apple Silicon Macs running macOS 14 or later. This is an ongoing implementation, not a complete TallyPrime replacement or a product of Tally Solutions.
+
+## Download
+
+[Download LedgerDesk 0.7 for Mac (ZIP)](https://github.com/jaykumargori/ledgerdesk/releases/download/v0.7/LedgerDesk-0.7-Mac.zip) · [Release notes](https://github.com/jaykumargori/ledgerdesk/releases/tag/v0.7)
+
+For Apple Silicon Macs running macOS 14 or later. Unzip the file and move LedgerDesk to Applications. The development build is not notarized, so macOS may show a warning. This first updater-enabled version must be installed manually; subsequent updates require a published signed release. See [UPDATES.md](UPDATES.md).
 
 ## Screenshots
 
