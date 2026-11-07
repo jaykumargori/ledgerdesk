@@ -1,14 +1,16 @@
-# LedgerDesk for Mac — development build 0.7
+# LedgerDesk for Mac — development build 0.8
 
 Independent offline SwiftUI accounting software for Apple Silicon Macs running macOS 14 or later. This is an ongoing implementation, not a complete TallyPrime replacement or a product of Tally Solutions.
 
 ## Download
 
-[Download LedgerDesk 0.7 for Mac (ZIP)](https://github.com/jaykumargori/ledgerdesk/releases/download/v0.7/LedgerDesk-0.7-Mac.zip) · [Release notes](https://github.com/jaykumargori/ledgerdesk/releases/tag/v0.7)
+[Download LedgerDesk 0.8 for Mac (DMG)](https://github.com/jaykumargori/ledgerdesk/releases/download/v0.8/LedgerDesk-0.8-Mac.dmg) · [Release notes](https://github.com/jaykumargori/ledgerdesk/releases/tag/v0.8)
 
-For Apple Silicon Macs running macOS 14 or later. Unzip the file and move LedgerDesk to Applications. The development build is not notarized, so macOS may show a warning. This first updater-enabled version must be installed manually; subsequent updates require a published signed release. See [UPDATES.md](UPDATES.md).
+For Apple Silicon Macs running macOS 14 or later. Open the DMG and drag LedgerDesk to Applications. The development build is not notarized, so macOS may show a warning. This first updater-enabled version must be installed manually; subsequent updates require a published signed release. See [UPDATES.md](UPDATES.md).
 
 ## Screenshots
+
+Screenshots show an earlier version of LedgerDesk.
 
 ### Gateway
 ![LedgerDesk Gateway](docs/screenshots/gateway.png)
@@ -26,7 +28,7 @@ For Apple Silicon Macs running macOS 14 or later. Unzip the file and move Ledger
 ![Go To navigation](docs/screenshots/go-to.png)
 
 ## Run and data
-Unzip LedgerDesk-Mac.zip and open LedgerDesk.app. The package is locally signed; it is not notarized. Data is stored at ~/Library/Application Support/LedgerDesk/books.json. Company > Export Backup saves a portable JSON backup. Import preserves the previous file as before-import-<UUID>.json in that directory before replacing it. Existing 0.1/0.2 books are decoded with defaults for new fields.
+Open the DMG and drag LedgerDesk to Applications. The package is locally signed; it is not notarized. Data is stored at ~/Library/Application Support/LedgerDesk/books.json. Company > Export Backup saves a portable JSON backup. Import preserves the previous file as before-import-<UUID>.json in that directory before replacing it. Existing 0.1/0.2 books are decoded with defaults for new fields.
 
 ## Features
 - TallyPrime-style desktop shell: blue top ribbon, white split Gateway, pale-blue menu and action rail, yellow selection, compact typography and bottom command bar. The standard Mac sidebar has been removed.
@@ -82,11 +84,11 @@ Added the upper SmartFind search row, notifications button, revised two-row ribb
 
 SmartFind searches local ledgers, stock items, journal narrations and invoices by text or displayed amount. It is a case-insensitive substring search, not Tally's cross-company/fuzzy search. Invoice results drill down to their invoice; other results navigate to the related register.
 
-Try Now has working next/previous buttons, minimisation, message hiding, a feature report and a display-settings toggle. Messages describe implemented LedgerDesk features, not Tally connected services. TallyCapital opens an explicit external-service information panel; it is not connected. The Help menu provides an external TallyIra documentation link, not a plug-in installer.
+Try Now has working next/previous buttons, minimisation, message hiding, a feature report and a display-settings toggle. Messages describe implemented LedgerDesk features, not Tally connected services. 
 
 Period selection updates Gateway context only. Individual reports retain their existing scope/date controls; there is no global financial-year filter. Select Company currently shows the single local company. The notifications button displays existing storage errors or No notifications; it is not a remote notification service.
 
-Native UI verification covered normal typed search plus Enter, search results and invoice drill-down, the period dialog, company selector, tile message navigation and minimisation, and final Gateway/ribbon readability. A focus conflict between search input and Gateway shortcuts and blank row hit areas were found and corrected during testing. Final TallyCapital column received a small spacing adjustment after the interaction pass. Accounting engine code was unchanged.
+Native UI verification covered normal typed search plus Enter, search results and invoice drill-down, the period dialog, company selector, tile message navigation and minimisation, and final Gateway/ribbon readability. A focus conflict between search input and Gateway shortcuts and blank row hit areas were found and corrected during testing. Accounting engine code was unchanged.
 
 ## Banking and document work in 0.6
 The screenshot supplied by the user showed an unfinished Banking screen. Banking now opens directly into Banking Activities, listing known bank ledgers even with zero transactions. It has count/amount views, drill-down into Bank Reconciliation Summary and sectioned transaction reports, bank configuration and account metadata, period/as-at selection, contextual F4/F5/F8/F12 actions, matched/unmatched views, same-amount potential-match suggestions within 30 days, and a dedicated Find Matches panel. Creating a missing voucher from an imported bank entry posts and links it in a single atomic transaction. Explicit bank mappings and bank names/references identify bank ledgers; arbitrary asset ledgers are no longer listed automatically.
