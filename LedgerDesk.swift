@@ -1,6 +1,7 @@
 import AppKit
 import Foundation
 import SwiftUI
+import Sparkle
 
 struct Ledger: Codable, Identifiable {
   var id = UUID()
@@ -904,7 +905,38 @@ struct MovementForm: View {
   }
 }
 @main struct LedgerDeskApp: App {
+  private let updaterController = SPUStandardUpdaterController(
+    startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+
   var body: some Scene {
     WindowGroup { ContentView() }.defaultSize(width: 1280, height: 710).windowStyle(.titleBar)
+      .commands {
+        CommandGroup(after: .appInfo) {
+          CheckForUpdatesView(updater: updaterController.updater)
+        }
+      }
+  }
+}
+
+private final class UpdateAvailability: ObservableObject {
+  @Published var canCheck = false
+
+  init(updater: SPUUpdater) {
+    updater.publisher(for: \.canCheckForUpdates).assign(to: &$canCheck)
+  }
+}
+
+private struct CheckForUpdatesView: View {
+  @ObservedObject private var availability: UpdateAvailability
+  private let updater: SPUUpdater
+
+  init(updater: SPUUpdater) {
+    self.updater = updater
+    self.availability = UpdateAvailability(updater: updater)
+  }
+
+  var body: some View {
+    Button("Check for Updates…", action: updater.checkForUpdates)
+      .disabled(!availability.canCheck)
   }
 }

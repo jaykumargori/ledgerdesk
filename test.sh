@@ -6,7 +6,7 @@ mkdir -p build
 python3 - <<'PY'
 from pathlib import Path
 source = Path('LedgerDesk.swift').read_text().split('@MainActor')[0]
-Path('build/Models.swift').write_text(source.replace('import SwiftUI\n', '').replace('import AppKit\n', ''))
+Path('build/Models.swift').write_text(source.replace('import SwiftUI\n', '').replace('import AppKit\n', '').replace('import Sparkle\n', ''))
 PY
 swiftc -module-cache-path "${TMPDIR:-/tmp}/ledgerdesk-build-cache" -parse-as-library build/Models.swift Invoices.swift Business.swift BankReports.swift PurchaseOrders.swift Tests/InvoiceTests.swift -o build/invoice-tests
 ./build/invoice-tests
