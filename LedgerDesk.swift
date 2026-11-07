@@ -199,6 +199,7 @@ struct Books: Codable {
 }
 let currency = FloatingPointFormatStyle<Double>.Currency(code: "INR")
 struct ContentView: View {
+  let updater: SPUUpdater
   @StateObject private var store = Store()
   @StateObject private var banking = BankWorkspace()
   @StateObject private var purchaseOrders = PurchaseOrderWorkspace()
@@ -217,7 +218,6 @@ struct ContentView: View {
   @State private var showPeriod = false
   @State private var showCompanies = false
   @State private var showDisplaySettings = false
-  @State private var showService = false
   @State private var showNotifications = false
   @State private var periodStart = FiscalCalendar.start(Date())
   @State private var periodEnd = FiscalCalendar.end(Date())
@@ -290,18 +290,6 @@ struct ContentView: View {
         SelectCompanyView(store: store, details: { section = "Company" })
       }
       .sheet(isPresented: $showDisplaySettings) { DisplaySettingsView() }
-      .sheet(isPresented: $showService) {
-        VStack(alignment: .leading, spacing: 16) {
-          Text("TallyCapital").font(.headline)
-          Text(
-            "TallyCapital is a Tally Solutions service and is not connected to this independent app."
-          )
-          Link(
-            "View official information",
-            destination: URL(string: "https://help.tallysolutions.com/tallycapital-add-on/")!)
-          Button("Close") { showService = false }
-        }.padding(24).frame(width: 440)
-      }
       .sheet(isPresented: $showNotifications) {
         VStack(alignment: .leading, spacing: 16) {
           Text("Notifications").font(.headline)
@@ -393,15 +381,11 @@ struct ContentView: View {
             Button("Purchase order templates") { section = "Order Templates" }
           }.fixedSize()
             .frame(width: 94, alignment: .leading)
-          Button("9: TallyCapital") { showService = true }.fixedSize().frame(
-            width: 108, alignment: .leading)
+          CheckForUpdatesView(updater: updater, title: "Check Updates").fixedSize().frame(width: 112, alignment: .leading)
           Menu("F1: Help") {
             Button("Keyboard shortcuts") { showHelp = true }
             Button("Settings > Display") { showDisplaySettings = true }
             Button("Try Now") { section = "Try Now" }
-            Link(
-              "Get Started with TallyIra",
-              destination: URL(string: "https://help.tallysolutions.com/get-started-docs-by-ira/")!)
           }.fixedSize().frame(width: 64, alignment: .leading)
         }.font(.system(size: 12)).menuStyle(.borderlessButton).menuIndicator(.hidden).environment(
           \.colorScheme, .dark
@@ -489,7 +473,8 @@ struct ContentView: View {
       Button("G: Go To") { showGoTo = true }.padding(.horizontal, 16)
       Spacer()
       Text(store.books.company).font(.system(size: 11)).foregroundStyle(.secondary)
-      Text("0.6").font(.system(size: 11)).padding(.horizontal, 12)
+      Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")
+        .font(.system(size: 11)).padding(.horizontal, 12)
     }.buttonStyle(.plain).frame(height: 28).background(Prime.pale).overlay(alignment: .top) {
       Prime.line.frame(height: 1)
     }
@@ -507,7 +492,6 @@ struct ContentView: View {
     case "Create", "Alter": master = MasterRoute(id: target)
     case "New Voucher": openVoucher("Journal")
     case "Reports": showGoTo = true
-    case "TallyCapital": showService = true
     case "Quit": NSApplication.shared.terminate(nil)
     default: section = target
     }
@@ -909,7 +893,7 @@ struct MovementForm: View {
     startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
 
   var body: some Scene {
-    WindowGroup { ContentView() }.defaultSize(width: 1280, height: 710).windowStyle(.titleBar)
+    WindowGroup { ContentView(updater: updaterController.updater) }.defaultSize(width: 1280, height: 710).windowStyle(.titleBar)
       .commands {
         CommandGroup(after: .appInfo) {
           CheckForUpdatesView(updater: updaterController.updater)
@@ -929,14 +913,16 @@ private final class UpdateAvailability: ObservableObject {
 private struct CheckForUpdatesView: View {
   @ObservedObject private var availability: UpdateAvailability
   private let updater: SPUUpdater
+  private let title: String
 
-  init(updater: SPUUpdater) {
+  init(updater: SPUUpdater, title: String = "Check for Updates…") {
     self.updater = updater
+    self.title = title
     self.availability = UpdateAvailability(updater: updater)
   }
 
   var body: some View {
-    Button("Check for Updates…", action: updater.checkForUpdates)
+    Button(title, action: updater.checkForUpdates)
       .disabled(!availability.canCheck)
   }
 }

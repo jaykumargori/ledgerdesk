@@ -53,7 +53,6 @@ struct GatewayView: View {
       "UTILITIES",
       [
         GatewayRow(label: "Banking", target: "Banking", key: "n"),
-        GatewayRow(label: "TallyCapital", target: "TallyCapital", key: "t"),
       ]
     ),
     (
